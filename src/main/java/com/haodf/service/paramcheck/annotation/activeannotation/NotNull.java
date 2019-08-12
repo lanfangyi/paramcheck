@@ -5,6 +5,9 @@ import com.haodf.service.paramcheck.annotation.activeannotation.validator.NotNul
 
 import java.lang.annotation.*;
 
+/**
+ * 校验参数是否为null的注解
+ */
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

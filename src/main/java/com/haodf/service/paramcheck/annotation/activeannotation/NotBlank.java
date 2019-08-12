@@ -5,6 +5,9 @@ import com.haodf.service.paramcheck.annotation.activeannotation.validator.NotBla
 
 import java.lang.annotation.*;
 
+/**
+ * 校验参数类型为CharSequence的参数是否为空的注解
+ */
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

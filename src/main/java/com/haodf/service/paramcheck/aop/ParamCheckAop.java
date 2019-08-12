@@ -20,6 +20,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * 校验执行器
+ */
 @Aspect
 @Component
 @Slf4j

@@ -4,6 +4,9 @@ import com.haodf.service.paramcheck.aop.validate.ErrorLevelEnum;
 
 import java.lang.annotation.*;
 
+/**
+ * 开启校验的标志注解，当一个方法上加了这个注解，就会开启校验。
+ */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

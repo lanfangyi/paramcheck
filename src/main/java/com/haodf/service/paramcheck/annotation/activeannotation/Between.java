@@ -5,6 +5,9 @@ import com.haodf.service.paramcheck.annotation.activeannotation.validator.Betwee
 
 import java.lang.annotation.*;
 
+/**
+ * 校验参数是否在某个范围内的注解，只能是整数
+ */
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

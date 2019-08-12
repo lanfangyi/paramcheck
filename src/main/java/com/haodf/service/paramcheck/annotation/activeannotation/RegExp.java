@@ -5,6 +5,9 @@ import com.haodf.service.paramcheck.annotation.activeannotation.validator.RegExp
 
 import java.lang.annotation.*;
 
+/**
+ * 自定义正则表达式的注解。参数必须符合正则表达式。
+ */
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

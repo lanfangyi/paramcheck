@@ -5,6 +5,9 @@ import com.haodf.service.paramcheck.annotation.activeannotation.validator.MaxVal
 
 import java.lang.annotation.*;
 
+/**
+ * 校验最大值的注解
+ */
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

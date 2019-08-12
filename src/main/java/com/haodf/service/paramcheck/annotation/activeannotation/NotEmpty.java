@@ -5,6 +5,9 @@ import com.haodf.service.paramcheck.annotation.activeannotation.validator.NotEmp
 
 import java.lang.annotation.*;
 
+/**
+ * 校验类型为集合的参数是否为空的注解
+ */
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

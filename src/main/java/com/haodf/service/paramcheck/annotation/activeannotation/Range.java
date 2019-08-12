@@ -5,6 +5,9 @@ import com.haodf.service.paramcheck.annotation.activeannotation.validator.RangeV
 
 import java.lang.annotation.*;
 
+/**
+ *校验参数是否是在某一段数值区间的注解，可以为小数
+ */
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
