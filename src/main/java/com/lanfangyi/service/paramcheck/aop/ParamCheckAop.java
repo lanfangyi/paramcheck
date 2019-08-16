@@ -31,7 +31,7 @@ import static com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum.ERROR
 public class ParamCheckAop {
 
     /**
-     * 切面函数
+     * 切面函数，只有加了@Valid注解的接口才会开启注解校验
      *
      * @param joinPoint 切点
      * @return Object 接口的返回值
