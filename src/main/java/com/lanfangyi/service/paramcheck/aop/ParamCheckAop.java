@@ -20,6 +20,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum.ERROR;
+
 /**
  * 校验执行器
  */
@@ -106,7 +108,8 @@ public class ParamCheckAop {
             }
             validateResult = (ValidateResult) valid.invoke(o, annotation, param, paramName);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            //记一个日志 TODO
+            //记一个日志
+            addErrLog(null, e.toString(), ERROR);
             throw e;
         }
         return validateResult;

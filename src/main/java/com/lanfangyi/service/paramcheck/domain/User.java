@@ -19,13 +19,4 @@ public class User {
     @Check
     private User2 user2;
 
-    @Valid
-    public void get(@NotNull Integer a) {
-        System.out.println("=========");
-    }
-
-    public static void main(String[] args) {
-        new User().get(null);
-    }
-
 }
