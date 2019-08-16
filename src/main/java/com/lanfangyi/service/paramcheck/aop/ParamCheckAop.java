@@ -30,6 +30,13 @@ import static com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum.ERROR
 @Slf4j
 public class ParamCheckAop {
 
+    /**
+     * 切面函数
+     *
+     * @param joinPoint 切点
+     * @return Object 接口的返回值
+     * @throws Throwable
+     */
     @Around("@annotation(com.lanfangyi.service.paramcheck.annotation.Valid)")
     public Object valid(ProceedingJoinPoint joinPoint) throws Throwable {
         //获取方法的入参
@@ -83,7 +90,20 @@ public class ParamCheckAop {
         return joinPoint.proceed();
     }
 
-    private ValidateResult check(Annotation annotation, Object param, String paramName) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    /**
+     * 根据注解校验入参
+     *
+     * @param annotation 校验的注解
+     * @param param      参数
+     * @param paramName  参数名
+     * @return ValidateResult
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    private ValidateResult check(Annotation annotation, Object param, String paramName) throws InvocationTargetException,
+        NoSuchMethodException, InstantiationException, IllegalAccessException {
         ValidateResult validateResult;
         if (annotation == null) {
             return null;
@@ -115,7 +135,18 @@ public class ParamCheckAop {
         return validateResult;
     }
 
-    private ValidateResult checkEntity(Object param) throws IllegalAccessException, NoSuchMethodException, InstantiationException, InvocationTargetException {
+    /**
+     * 递归校验实体属性
+     *
+     * @param param 实体实例对象
+     * @return ValidateResult
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
+     * @throws InstantiationException
+     * @throws InvocationTargetException
+     */
+    private ValidateResult checkEntity(Object param) throws IllegalAccessException, NoSuchMethodException,
+        InstantiationException, InvocationTargetException {
         ValidateResult validateResult = null;
         Class<?> clazz = param.getClass();
         Field[] declaredFields = clazz.getDeclaredFields();
@@ -137,10 +168,24 @@ public class ParamCheckAop {
         return validateResult;
     }
 
+    /**
+     * 校验返回类型是否正确
+     *
+     * @param method     方法对象
+     * @param returnType 返回类型
+     * @return boolean
+     */
     private boolean checkReturnType(Method method, Object returnType) {
         return method.getReturnType().equals(returnType.getClass());
     }
 
+    /**
+     * 记日志
+     *
+     * @param userLogMsg  用户配置的日志信息
+     * @param checkLogMsg 系统默认的日志信息
+     * @param logLevel    日志级别
+     */
     private void addErrLog(String userLogMsg, String checkLogMsg, ErrorLevelEnum logLevel) {
         String logMsg;
         if (!StringUtils.isEmpty(userLogMsg)) {
