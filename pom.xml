@@ -8,7 +8,7 @@
         <version>2.1.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.haodf.com</groupId>
+    <groupId>com.lanfangyi</groupId>
     <artifactId>paramcheck</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>paramcheck</name>
