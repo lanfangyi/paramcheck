@@ -1,4 +1,4 @@
-package com.lanfangyi.service.paramcheck.Valid;
+package com.lanfangyi.service.paramcheck.valid;
 
 /**
  * 校验工具类
