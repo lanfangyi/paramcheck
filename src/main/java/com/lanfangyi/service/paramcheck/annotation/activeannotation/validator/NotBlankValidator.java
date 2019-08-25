@@ -4,6 +4,7 @@ import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotBlank;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
 import com.lanfangyi.service.paramcheck.exception.AnnotationNoMatchFieldException;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
@@ -33,7 +34,7 @@ public class NotBlankValidator implements Validateable {
         if (!StringUtils.isEmpty(notBlank.contain())) {
             contain = param.toString().contains(notBlank.contain());
         }
-        if (notBlank.among().length != 0) {
+        if (notBlank.among().length != 0 && !CollectionUtils.isEmpty(Arrays.asList(notBlank.among()))) {
             String[] amongStr = notBlank.among();
             among = Arrays.asList(amongStr).contains(param.toString());
         }

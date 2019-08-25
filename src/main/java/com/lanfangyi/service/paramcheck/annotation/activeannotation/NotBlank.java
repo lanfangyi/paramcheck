@@ -20,5 +20,5 @@ public @interface NotBlank {
 
     String contain() default "";
 
-    String[] among() default "";
+    String[] among() ;
 }
