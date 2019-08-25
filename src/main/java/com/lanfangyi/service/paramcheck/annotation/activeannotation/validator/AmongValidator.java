@@ -13,9 +13,12 @@ import java.util.List;
 public class AmongValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        if (null == param) {
+            return ValidateResult.nullValiddateResult(paramName);
+        }
         ValidateResult validateResult = null;
         if (!(param instanceof Number)) {
-            throw new AnnotationNoMatchFieldException();
+            throw new AnnotationNoMatchFieldException("Class of param is not Number");
         }
         Among among = (Among) annotation;
         double[] value = among.value();

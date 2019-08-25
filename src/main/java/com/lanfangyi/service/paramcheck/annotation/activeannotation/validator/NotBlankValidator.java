@@ -12,9 +12,12 @@ import java.util.Arrays;
 public class NotBlankValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        if (null == param) {
+            return ValidateResult.nullValiddateResult(paramName);
+        }
         ValidateResult validateResult = null;
         if (!(param instanceof CharSequence)) {
-            throw new AnnotationNoMatchFieldException();
+            throw new AnnotationNoMatchFieldException("Class of param is not CharSequence");
         }
         NotBlank notBlank = (NotBlank) annotation;
         boolean startWith = true;

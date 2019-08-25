@@ -11,11 +11,14 @@ public class MaxValidator implements Validateable {
 
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        if (null == param) {
+            return ValidateResult.nullValiddateResult(paramName);
+        }
         ValidateResult validateResult = null;
         Max max = (Max) annotation;
         double maxValue = max.value();
         if (!(param instanceof Number)) {
-            throw new AnnotationNoMatchFieldException();
+            throw new AnnotationNoMatchFieldException("Class of param is not Number");
         }
         if (maxValue < Double.valueOf(String.valueOf(param))) {
             validateResult = new ValidateResult();

@@ -11,9 +11,12 @@ import java.util.Collection;
 public class NotEmptyValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        if (null == param) {
+            return ValidateResult.nullValiddateResult(paramName);
+        }
         ValidateResult validateResult = null;
         if (!(param instanceof Collection)) {
-            throw new AnnotationNoMatchFieldException();
+            throw new AnnotationNoMatchFieldException("Class of param is not Collection");
         }
         if (CollectionUtils.isEmpty((Collection) param)) {
             validateResult = new ValidateResult();

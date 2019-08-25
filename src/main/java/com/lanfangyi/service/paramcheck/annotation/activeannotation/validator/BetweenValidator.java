@@ -13,12 +13,15 @@ import java.util.regex.Pattern;
 public class BetweenValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        if (null == param) {
+            return ValidateResult.nullValiddateResult(paramName);
+        }
         ValidateResult validateResult = null;
         Between between = (Between) annotation;
         long max = between.max();
         long min = between.min();
         if (!(param instanceof Number)) {
-            throw new AnnotationNoMatchFieldException();
+            throw new AnnotationNoMatchFieldException("Class of param is not Number");
         }
         if (!isRationalNumber(String.valueOf(param))) {
             throw new NoRationalNumberException();
