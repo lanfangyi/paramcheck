@@ -6,6 +6,7 @@ import com.lanfangyi.service.paramcheck.annotation.ValidateBy;
 import com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.exception.TypeMismatchException;
+import com.lanfangyi.service.paramcheck.resp.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -84,8 +85,19 @@ public class ParamCheckAop {
                     addErrLog(valid.logMsg(), check.getValidMsg(), valid.logLevel());
                 }
                 boolean setCodeAndMsg = valid.setCodeAndMsg();
-                if (setCodeAndMsg) {
+                //判断返回值类型是否是BaseResponse或其子类
+                if (setCodeAndMsg && BaseResponse.class.isAssignableFrom(method.getReturnType())) {
+                    Object returnObj = method.getReturnType().newInstance();
+                    if (null != returnObj) {
+                        Field message = method.getReturnType().getDeclaredField("message");
+                        message.setAccessible(true);
+                        message.set(returnObj, check.getValidMsg());
 
+                        Field code = method.getReturnType().getDeclaredField("code");
+                        code.setAccessible(true);
+                        code.set(returnObj, check.getCode());
+                    }
+                    return returnObj;
                 } else {
                     return method.getReturnType().newInstance();
                 }
