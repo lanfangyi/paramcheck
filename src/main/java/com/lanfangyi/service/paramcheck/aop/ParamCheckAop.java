@@ -89,11 +89,11 @@ public class ParamCheckAop {
                 if (setCodeAndMsg && BaseResponse.class.isAssignableFrom(method.getReturnType())) {
                     Object returnObj = method.getReturnType().newInstance();
                     if (null != returnObj) {
-                        Field message = method.getReturnType().getDeclaredField("message");
+                        Field message = method.getReturnType().getSuperclass().getDeclaredField("message");
                         message.setAccessible(true);
                         message.set(returnObj, check.getValidMsg());
 
-                        Field code = method.getReturnType().getDeclaredField("code");
+                        Field code = method.getReturnType().getSuperclass().getDeclaredField("code");
                         code.setAccessible(true);
                         code.set(returnObj, check.getCode());
                     }
