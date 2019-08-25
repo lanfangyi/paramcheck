@@ -16,33 +16,45 @@ public class NotBlankValidator implements Validateable {
         if (null == param) {
             return ValidateResult.nullValiddateResult(paramName);
         }
-        ValidateResult validateResult = null;
+        ValidateResult validateResult;
         if (!(param instanceof CharSequence)) {
             throw new AnnotationNoMatchFieldException("Class of param is not CharSequence");
         }
         NotBlank notBlank = (NotBlank) annotation;
-        boolean startWith = true;
-        boolean endWith = true;
-        boolean contain = true;
-        boolean among = true;
-        if (!StringUtils.isEmpty(notBlank.startWith())) {
-            startWith = param.toString().startsWith(notBlank.startWith());
-        }
-        if (!StringUtils.isEmpty(notBlank.endWith())) {
-            endWith = param.toString().endsWith(notBlank.endWith());
-        }
-        if (!StringUtils.isEmpty(notBlank.contain())) {
-            contain = param.toString().contains(notBlank.contain());
-        }
-        if (notBlank.among().length != 0 && !CollectionUtils.isEmpty(Arrays.asList(notBlank.among()))) {
-            String[] amongStr = notBlank.among();
-            among = Arrays.asList(amongStr).contains(param.toString());
-        }
-        if (StringUtils.isEmpty(param) || !startWith || !endWith || !contain || !among) {
+        if (StringUtils.isEmpty(param)) {
             validateResult = new ValidateResult();
             validateResult.setCode(405);
             validateResult.setValidMsg(paramName + "参数为空字符串");
+            return validateResult;
         }
-        return validateResult;
+        if (!StringUtils.isEmpty(notBlank.startWith()) && !param.toString().startsWith(notBlank.startWith())) {
+            validateResult = new ValidateResult();
+            validateResult.setCode(405);
+            validateResult.setValidMsg(paramName + "参数不以" + notBlank.startWith() + "开头");
+            return validateResult;
+        }
+        if (!StringUtils.isEmpty(notBlank.endWith()) && !param.toString().endsWith(notBlank.endWith())) {
+            validateResult = new ValidateResult();
+            validateResult.setCode(405);
+            validateResult.setValidMsg(paramName + "参数不以" + notBlank.endWith() + "结尾");
+            return validateResult;
+        }
+        if (!StringUtils.isEmpty(notBlank.contain()) && !param.toString().contains(notBlank.contain())) {
+            validateResult = new ValidateResult();
+            validateResult.setCode(405);
+            validateResult.setValidMsg(paramName + "参数不包含" + notBlank.endWith());
+            return validateResult;
+        }
+        if (notBlank.among().length != 0 && !CollectionUtils.isEmpty(Arrays.asList(notBlank.among()))
+            && !(notBlank.among().length == 1 && StringUtils.isEmpty(notBlank.among()[0]))) {
+            String[] amongStr = notBlank.among();
+            if (!Arrays.asList(amongStr).contains(param.toString())) {
+                validateResult = new ValidateResult();
+                validateResult.setCode(405);
+                validateResult.setValidMsg(paramName + "参数的取值范围是" + Arrays.toString(notBlank.among()));
+                return validateResult;
+            }
+        }
+        return null;
     }
 }
