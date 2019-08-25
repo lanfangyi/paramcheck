@@ -83,7 +83,12 @@ public class ParamCheckAop {
                 if (addErrLog) {
                     addErrLog(valid.logMsg(), check.getValidMsg(), valid.logLevel());
                 }
-                return method.getReturnType().newInstance();
+                boolean setCodeAndMsg = valid.setCodeAndMsg();
+                if (setCodeAndMsg) {
+
+                } else {
+                    return method.getReturnType().newInstance();
+                }
             }
         }
         //方法放行

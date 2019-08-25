@@ -37,4 +37,9 @@ public @interface Valid {
      */
     String logMsg() default "";
 
+    /**
+     * 当没有定义返回值并且方法的返回类型中含有code、msg、message等字段时，会将校验的结果设到这等字段中
+     */
+    boolean setCodeAndMsg() default true;
+
 }
