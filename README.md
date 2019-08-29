@@ -6,13 +6,9 @@ springboot对外接口参数校验工具<br>
 2、在项目中新建一个与src同级的目录libs, 其实名字随意，我这里用libs。<br>
 3、在把paramcheck.jar粘贴到libs下。<br>
 4、在pom.xml中加入如下配置：<br>
-        <dependency>
-            <groupId>com.lanfangyi</groupId>
-            <artifactId>paramcheck</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/paramcheck.jar</systemPath>
-        </dependency><br>
+       
+
+
  说明：gav三个参数随便写，但尽量按照规范来。<br>
  
  使用示例<br>
