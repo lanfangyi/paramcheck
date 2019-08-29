@@ -2,7 +2,7 @@
 springboot对外接口参数校验工具
 
 使用方法是：
-1、下载paramcheck/classes/artifacts/paramcheck_jar/paramcheck.jar 。
+1、下载paramcheck/classes/artifacts/paramcheck_jar/paramcheck.jar 。<br>
 2、在项目中新建一个与src同级的目录libs, 其实名字随意，我这里用libs。
 3、在把paramcheck.jar粘贴到libs下。
 4、在pom.xml中加入如下配置：
