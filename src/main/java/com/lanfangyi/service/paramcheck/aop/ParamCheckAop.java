@@ -26,6 +26,11 @@ import static com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum.ERROR
 /**
  * 校验执行器
  */
+/**
+ * @author lanfangyi@haodf.com
+ * @version 1.0
+ * @since 2019/8/20 10:44 PM
+ */
 @Aspect
 @Component
 @Slf4j

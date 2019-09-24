@@ -6,6 +6,10 @@ import java.lang.annotation.*;
 
 /**
  * 开启校验的标志注解，当一个方法上加了这个注解，就会开启校验。
+ *
+ * @author lanfangyi@haodf.com
+ * @version 1.0
+ * @since 2019/8/20 10:44 PM
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

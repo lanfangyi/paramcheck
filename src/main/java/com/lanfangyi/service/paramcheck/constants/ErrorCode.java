@@ -3,6 +3,11 @@ package com.lanfangyi.service.paramcheck.constants;
 
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 
+/**
+ * @author lanfangyi@haodf.com
+ * @version 1.0
+ * @since 2019/8/20 10:44 PM
+ */
 public class ErrorCode {
 
     private ErrorCode() {

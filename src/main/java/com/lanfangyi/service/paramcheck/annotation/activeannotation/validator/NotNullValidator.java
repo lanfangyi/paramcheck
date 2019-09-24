@@ -5,6 +5,11 @@ import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * @author lanfangyi@haodf.com
+ * @version 1.0
+ * @since 2019/8/20 10:44 PM
+ */
 public class NotNullValidator implements Validateable {
 
     @Override

@@ -10,6 +10,11 @@ import org.springframework.util.StringUtils;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 
+/**
+ * @author lanfangyi@haodf.com
+ * @version 1.0
+ * @since 2019/8/20 10:44 PM
+ */
 public class NotBlankValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
