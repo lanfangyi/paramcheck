@@ -32,10 +32,10 @@ public class AmongValidator implements Validateable {
             list.add(v);
         }
 
-        if (!CollectionUtils.isEmpty(list) && !list.contains(param)) {
+        if (!CollectionUtils.isEmpty(list) && !list.contains(Double.valueOf(String.valueOf(param)))) {
             validateResult = new ValidateResult();
             validateResult.setCode(405);
-            validateResult.setValidMsg(paramName + "参数为空字符串");
+            validateResult.setValidMsg(paramName + "参数不在给定的数组里！");
         }
         return validateResult;
     }

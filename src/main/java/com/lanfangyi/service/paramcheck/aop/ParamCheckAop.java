@@ -26,6 +26,7 @@ import static com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum.ERROR
 /**
  * 校验执行器
  */
+
 /**
  * @author lanfangyi@haodf.com
  * @version 1.0
@@ -49,7 +50,6 @@ public class ParamCheckAop {
         Object[] args = joinPoint.getArgs();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        System.out.println(method.getName());
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
         String[] parameterNames = signature.getParameterNames();
         //遍历取出方法的注解
@@ -95,13 +95,30 @@ public class ParamCheckAop {
                 if (setCodeAndMsg && BaseResponse.class.isAssignableFrom(method.getReturnType())) {
                     Object returnObj = method.getReturnType().newInstance();
                     if (null != returnObj) {
-                        Field message = method.getReturnType().getSuperclass().getDeclaredField("message");
-                        message.setAccessible(true);
-                        message.set(returnObj, check.getValidMsg());
+                        try {
+                            Field message;
+                            Field code;
+                            if (method.getReturnType().equals(BaseResponse.class)) {
+                                message = method.getReturnType().getDeclaredField("message");
+                                code = method.getReturnType().getDeclaredField("code");
+                            } else {
+                                message = method.getReturnType().getSuperclass().getDeclaredField("message");
+                                code = method.getReturnType().getSuperclass().getDeclaredField("code");
+                            }
+                            if (message == null) {
+                                throw new RuntimeException("can not find message field");
+                            }
+                            if (code == null) {
+                                throw new RuntimeException("can not find code field");
+                            }
+                            message.setAccessible(true);
+                            message.set(returnObj, check.getValidMsg());
 
-                        Field code = method.getReturnType().getSuperclass().getDeclaredField("code");
-                        code.setAccessible(true);
-                        code.set(returnObj, check.getCode());
+                            code.setAccessible(true);
+                            code.set(returnObj, check.getCode());
+                        } catch (Throwable throwable) {
+                            log.error(throwable.getMessage());
+                        }
                     }
                     return returnObj;
                 } else {

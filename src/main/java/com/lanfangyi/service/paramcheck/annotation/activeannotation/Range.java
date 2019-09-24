@@ -18,7 +18,7 @@ import java.lang.annotation.*;
 @ValidateBy(validatedClass = RangeValidator.class)
 public @interface Range {
 
-    double min();
+    double min() default Double.MIN_VALUE;
 
-    double max();
+    double max() default Double.MAX_VALUE;
 }

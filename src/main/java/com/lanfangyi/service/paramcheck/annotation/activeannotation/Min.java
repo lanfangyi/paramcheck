@@ -18,6 +18,6 @@ import java.lang.annotation.*;
 @ValidateBy(validatedClass = MinValidator.class)
 public @interface Min {
 
-    double value();
+    double value() default Double.MIN_VALUE;
 
 }

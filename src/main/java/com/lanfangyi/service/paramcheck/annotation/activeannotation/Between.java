@@ -18,8 +18,8 @@ import java.lang.annotation.*;
 @ValidateBy(validatedClass = BetweenValidator.class)
 public @interface Between {
 
-    long min();
+    long min() default Long.MIN_VALUE;
 
-    long max();
+    long max() default Long.MAX_VALUE;
 
 }

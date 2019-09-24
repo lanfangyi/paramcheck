@@ -29,7 +29,16 @@ public class NotEmptyValidator implements Validateable {
             validateResult.setCode(405);
             validateResult.setValidMsg(paramName + "参数不能为空集合");
         }
+
         NotEmpty notEmpty = (NotEmpty) annotation;
+
+        if (notEmpty.maxSize() < 1) {
+            throw new RuntimeException("Collection max size can not small than 1");
+        }
+        if (notEmpty.minSize() < 1) {
+            throw new RuntimeException("Collection min size can not small than 1");
+        }
+
         if (((Collection) param).size() < notEmpty.minSize()) {
             validateResult = new ValidateResult();
             validateResult.setCode(405);

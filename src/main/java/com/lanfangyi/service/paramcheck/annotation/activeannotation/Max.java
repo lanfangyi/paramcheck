@@ -18,6 +18,6 @@ import java.lang.annotation.*;
 @ValidateBy(validatedClass = MaxValidator.class)
 public @interface Max {
 
-    double value();
+    double value() default Double.MAX_VALUE;
 
 }

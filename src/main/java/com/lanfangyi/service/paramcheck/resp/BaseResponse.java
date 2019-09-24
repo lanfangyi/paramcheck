@@ -50,4 +50,12 @@ public class BaseResponse<T> implements Serializable {
         this.reqNo = reqNo;
         this.dataBody = dataBody;
     }
+
+    public static <T> BaseResponse<T> success(T data) {
+        BaseResponse<T> baseResponse = new BaseResponse<>();
+        baseResponse.setCode(0);
+        baseResponse.setMessage("");
+        baseResponse.setDataBody(data);
+        return baseResponse;
+    }
 }
