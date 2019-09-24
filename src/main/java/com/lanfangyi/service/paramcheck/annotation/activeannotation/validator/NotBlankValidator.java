@@ -45,6 +45,18 @@ public class NotBlankValidator implements Validateable {
             validateResult.setValidMsg(paramName + "参数不包含" + notBlank.endWith());
             return validateResult;
         }
+        if (!StringUtils.isEmpty(notBlank.contain()) && param.toString().length() < notBlank.minLength()) {
+            validateResult = new ValidateResult();
+            validateResult.setCode(405);
+            validateResult.setValidMsg(paramName + "参数长度不能小于" + notBlank.minLength());
+            return validateResult;
+        }
+        if (!StringUtils.isEmpty(notBlank.contain()) && notBlank.maxLength() != -1 && param.toString().length() > notBlank.maxLength()) {
+            validateResult = new ValidateResult();
+            validateResult.setCode(405);
+            validateResult.setValidMsg(paramName + "参数长度不能大于" + notBlank.maxLength());
+            return validateResult;
+        }
         if (notBlank.among().length != 0 && !CollectionUtils.isEmpty(Arrays.asList(notBlank.among()))
             && !(notBlank.among().length == 1 && StringUtils.isEmpty(notBlank.among()[0]))) {
             String[] amongStr = notBlank.among();

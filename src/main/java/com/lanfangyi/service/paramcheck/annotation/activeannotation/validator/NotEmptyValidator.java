@@ -1,5 +1,6 @@
 package com.lanfangyi.service.paramcheck.annotation.activeannotation.validator;
 
+import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotEmpty;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
 import com.lanfangyi.service.paramcheck.exception.AnnotationNoMatchFieldException;
@@ -21,7 +22,18 @@ public class NotEmptyValidator implements Validateable {
         if (CollectionUtils.isEmpty((Collection) param)) {
             validateResult = new ValidateResult();
             validateResult.setCode(405);
-            validateResult.setValidMsg(paramName + "参数为空集合");
+            validateResult.setValidMsg(paramName + "参数不能为空集合");
+        }
+        NotEmpty notEmpty = (NotEmpty) annotation;
+        if (((Collection) param).size() < notEmpty.minSize()) {
+            validateResult = new ValidateResult();
+            validateResult.setCode(405);
+            validateResult.setValidMsg(paramName + "参数大小不能小于" + notEmpty.minSize());
+        }
+        if (((Collection) param).size() > notEmpty.maxSize()) {
+            validateResult = new ValidateResult();
+            validateResult.setCode(405);
+            validateResult.setValidMsg(paramName + "参数大小不能大于" + notEmpty.maxSize());
         }
         return validateResult;
     }

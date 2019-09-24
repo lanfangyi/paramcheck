@@ -13,4 +13,8 @@ import java.lang.annotation.*;
 @Documented
 @ValidateBy(validatedClass = NotEmptyValidator.class)
 public @interface NotEmpty {
+
+    int minSize() default -1;
+
+    int maxSize() default -1;
 }

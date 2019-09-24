@@ -44,6 +44,7 @@ public class ParamCheckAop {
         Object[] args = joinPoint.getArgs();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
+        System.out.println(method.getName());
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
         String[] parameterNames = signature.getParameterNames();
         //遍历取出方法的注解
