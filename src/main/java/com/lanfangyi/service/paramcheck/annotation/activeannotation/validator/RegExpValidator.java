@@ -3,6 +3,7 @@ package com.lanfangyi.service.paramcheck.annotation.activeannotation.validator;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.RegExp;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
+import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.regex.Pattern;
@@ -21,7 +22,7 @@ public class RegExpValidator implements Validateable {
         ValidateResult validateResult = null;
         String s = String.valueOf(param);
         RegExp regExp = (RegExp) annotation;
-        if (!Pattern.matches(regExp.value(), s)) {
+        if (!StringUtils.isEmpty(regExp.value()) && !Pattern.matches(regExp.value(), s)) {
             validateResult = new ValidateResult();
             validateResult.setCode(405);
             validateResult.setValidMsg(paramName + "参数不符合正则");

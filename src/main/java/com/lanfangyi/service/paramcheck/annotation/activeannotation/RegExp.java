@@ -18,5 +18,5 @@ import java.lang.annotation.*;
 @ValidateBy(validatedClass = RegExpValidator.class)
 public @interface RegExp {
 
-    String value();
+    String value() default "";
 }

@@ -41,10 +41,10 @@ public @interface NotBlank {
     /**
      * 字符串的最小长度
      */
-    int minLength() default -1;
+    int minLength() default Integer.MIN_VALUE;
 
     /**
      * 字符串的最大长度
      */
-    int maxLength() default -1;
+    int maxLength() default Integer.MAX_VALUE;
 }
