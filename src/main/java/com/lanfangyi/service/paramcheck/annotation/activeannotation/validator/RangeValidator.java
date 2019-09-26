@@ -16,7 +16,7 @@ public class RangeValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         if (null == param) {
-            return ValidateResult.nullValiddateResult(paramName);
+            return ValidateResult.nullValidateResult(paramName);
         }
         ValidateResult validateResult = null;
         Range range = (Range) annotation;

@@ -2,6 +2,7 @@ package com.lanfangyi.service.paramcheck.service;
 
 import com.lanfangyi.service.paramcheck.annotation.Valid;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.Among;
+import com.lanfangyi.service.paramcheck.annotation.activeannotation.Max;
 import com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum;
 import com.lanfangyi.service.paramcheck.resp.BaseResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class AmongService {
 
     @GetMapping("/test")
     @Valid(addErrLog = true, logLevel = ErrorLevelEnum.ERROR)
-    public BaseResponse<Integer> test(@Among({1, 2}) int a) {
+    public BaseResponse<Integer> test(@Among({1, 2}) @Max(3) int a) {
         System.out.println(a);
         return BaseResponse.success(a);
     }

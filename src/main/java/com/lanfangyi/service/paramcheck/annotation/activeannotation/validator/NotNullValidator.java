@@ -15,7 +15,7 @@ public class NotNullValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         if (param == null) {
-            return ValidateResult.nullValiddateResult(paramName);
+            return ValidateResult.nullValidateResult(paramName);
         }
         return null;
     }

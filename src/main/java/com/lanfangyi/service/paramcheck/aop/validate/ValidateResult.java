@@ -20,7 +20,7 @@ public class ValidateResult implements Serializable {
 
     private String validMsg;
 
-    public static ValidateResult nullValiddateResult(String paramName){
+    public static ValidateResult nullValidateResult(String paramName){
         ValidateResult validateResult = new ValidateResult();
         validateResult.setCode(405);
         validateResult.setValidMsg(paramName + "参数为null");

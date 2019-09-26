@@ -5,6 +5,7 @@ import com.lanfangyi.service.paramcheck.annotation.Valid;
 import com.lanfangyi.service.paramcheck.annotation.ValidateBy;
 import com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
+import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
 import com.lanfangyi.service.paramcheck.exception.TypeMismatchException;
 import com.lanfangyi.service.paramcheck.resp.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -118,6 +119,7 @@ public class ParamCheckAop {
                             log.error(throwable.getMessage());
                         }
                     }
+                    System.out.println(returnObj);
                     return returnObj;
                 } else {
                     return method.getReturnType().newInstance();
@@ -159,12 +161,13 @@ public class ParamCheckAop {
         }
         try {
             Class validatedClass = validateBy.validatedClass();
-            Object o = validatedClass.newInstance();
             Method valid = validatedClass.getDeclaredMethod("valid", Annotation.class, Object.class, String.class);
             if (valid == null) {
                 return new ValidateResult();
             }
-            validateResult = (ValidateResult) valid.invoke(o, annotation, param, paramName);
+            //获得校验器的实例子对象
+            Validateable validateable = (Validateable) validatedClass.newInstance();
+            validateResult = (ValidateResult) valid.invoke(validateable, annotation, param, paramName);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             //记一个日志
             addErrLog(null, e.toString(), ERROR);

@@ -19,7 +19,7 @@ public class NotBlankValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         if (null == param) {
-            return ValidateResult.nullValiddateResult(paramName);
+            return ValidateResult.nullValidateResult(paramName);
         }
         ValidateResult validateResult;
         if (!(param instanceof CharSequence)) {
