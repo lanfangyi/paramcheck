@@ -9,7 +9,7 @@ import org.springframework.core.annotation.AliasFor;
 import java.lang.annotation.*;
 
 /**
- * 校验参数是否为某几个值之中的一个的注解
+ * 校验参数是否为某几个值之中的一个的注解。可以用于整数和小数。
  *
  * @author lanfangyi@haodf.com
  * @version 1.0

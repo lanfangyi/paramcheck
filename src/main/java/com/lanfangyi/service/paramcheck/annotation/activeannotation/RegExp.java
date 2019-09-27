@@ -9,7 +9,7 @@ import org.springframework.core.annotation.AliasFor;
 import java.lang.annotation.*;
 
 /**
- * 自定义正则表达式的注解。参数必须符合正则表达式。
+ * 自定义正则表达式的注解。参数必须符合正则表达式。可用于数字类型和字符串类型的参数。
  *
  * @author lanfangyi@haodf.com
  * @version 1.0

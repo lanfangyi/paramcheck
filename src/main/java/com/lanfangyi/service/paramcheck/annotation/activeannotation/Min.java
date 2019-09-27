@@ -9,7 +9,7 @@ import org.springframework.core.annotation.AliasFor;
 import java.lang.annotation.*;
 
 /**
- * 校验最小值的注解
+ * 校验最小值的注解。用于数字类型的参数
  *
  * @author lanfangyi@haodf.com
  * @version 1.0

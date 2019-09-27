@@ -13,7 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 校验最小值的注解
+ * 校验最大长度的注解。可注解于类型为字符串和数字的参数
  *
  * @author lanfangyi@haodf.com
  * @version 1.0

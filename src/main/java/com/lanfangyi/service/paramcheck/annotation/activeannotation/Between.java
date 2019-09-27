@@ -9,7 +9,7 @@ import org.springframework.core.annotation.AliasFor;
 import java.lang.annotation.*;
 
 /**
- * 校验参数是否在某个范围内的注解，只能是整数
+ * 校验参数是否在某个范围内的注解，只能是整数。只能用于类型是整型的参数。
  *
  * @author lanfangyi@haodf.com
  * @version 1.0

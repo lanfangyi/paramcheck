@@ -9,7 +9,7 @@ import org.springframework.core.annotation.AliasFor;
 import java.lang.annotation.*;
 
 /**
- * 校验参数是否是在某一段数值区间的注解，可以为小数
+ * 校验参数是否是在某一段数值区间的注解，可以为小数。可用于类型是整数或小数的参数。
  *
  * @author lanfangyi@haodf.com
  * @version 1.0

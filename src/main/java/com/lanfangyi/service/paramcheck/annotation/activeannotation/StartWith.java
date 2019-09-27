@@ -14,7 +14,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 校验最小值的注解
+ * 校验字符串或数字是否以xxx结尾的注解。
  *
  * @author lanfangyi@haodf.com
  * @version 1.0
