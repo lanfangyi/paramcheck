@@ -18,11 +18,11 @@ import java.util.regex.Pattern;
 public class BetweenValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        Between between = (Between) annotation;
         if (null == param) {
-            return ValidateResult.nullValidateResult(paramName);
+            return ValidateResult.nullValidateResult(between.errorCode(), paramName);
         }
         ValidateResult validateResult = null;
-        Between between = (Between) annotation;
         long max = between.max();
         long min = between.min();
         if (!(param instanceof Number)) {

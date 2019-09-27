@@ -1,7 +1,10 @@
 package com.lanfangyi.service.paramcheck.annotation.activeannotation;
 
+import com.lanfangyi.service.paramcheck.annotation.ErrorCode;
 import com.lanfangyi.service.paramcheck.annotation.ValidateBy;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.validator.NotEmptyValidator;
+import com.lanfangyi.service.paramcheck.constants.HttpErrorCode;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
@@ -16,9 +19,14 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @ValidateBy(validatedClass = NotEmptyValidator.class)
+@ErrorCode
 public @interface NotEmpty {
 
     int minSize() default 1;
 
     int maxSize() default Integer.MAX_VALUE;
+
+    @AliasFor(annotation = ErrorCode.class)
+    int errorCode() default HttpErrorCode.ACCESS_DENIED;
+
 }

@@ -16,8 +16,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface ValidateBy {
 
-    String message() default "";
-
     Class<? extends Validateable> validatedClass();
 
 }

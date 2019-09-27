@@ -1,7 +1,10 @@
 package com.lanfangyi.service.paramcheck.annotation.activeannotation;
 
+import com.lanfangyi.service.paramcheck.annotation.ErrorCode;
 import com.lanfangyi.service.paramcheck.annotation.ValidateBy;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.validator.BetweenValidator;
+import com.lanfangyi.service.paramcheck.constants.HttpErrorCode;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
@@ -16,10 +19,14 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @ValidateBy(validatedClass = BetweenValidator.class)
+@ErrorCode
 public @interface Between {
 
     long min() default Long.MIN_VALUE;
 
     long max() default Long.MAX_VALUE;
+
+    @AliasFor(annotation = ErrorCode.class)
+    int errorCode() default HttpErrorCode.ACCESS_DENIED;
 
 }

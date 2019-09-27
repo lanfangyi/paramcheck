@@ -1,5 +1,6 @@
 package com.lanfangyi.service.paramcheck.annotation.activeannotation.validator;
 
+import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotNull;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
 
@@ -15,7 +16,8 @@ public class NotNullValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         if (param == null) {
-            return ValidateResult.nullValidateResult(paramName);
+            NotNull notNull = (NotNull) annotation;
+            return ValidateResult.nullValidateResult(notNull.errorCode(), paramName);
         }
         return null;
     }

@@ -17,8 +17,9 @@ import java.util.Collection;
 public class NotEmptyValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        NotEmpty notEmpty = (NotEmpty) annotation;
         if (null == param) {
-            return ValidateResult.nullValidateResult(paramName);
+            return ValidateResult.nullValidateResult(notEmpty.errorCode(), paramName);
         }
         ValidateResult validateResult = null;
         if (!(param instanceof Collection)) {
@@ -30,7 +31,6 @@ public class NotEmptyValidator implements Validateable {
             validateResult.setValidMsg(paramName + "参数不能为空集合");
         }
 
-        NotEmpty notEmpty = (NotEmpty) annotation;
 
         if (notEmpty.maxSize() < 1) {
             throw new RuntimeException("Collection max size can not small than 1");

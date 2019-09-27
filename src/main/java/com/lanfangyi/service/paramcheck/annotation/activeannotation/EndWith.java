@@ -1,8 +1,11 @@
 package com.lanfangyi.service.paramcheck.annotation.activeannotation;
 
+import com.lanfangyi.service.paramcheck.annotation.ErrorCode;
 import com.lanfangyi.service.paramcheck.annotation.ValidateBy;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.validator.EndWithValidator;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.validator.MinLengthValidator;
+import com.lanfangyi.service.paramcheck.constants.HttpErrorCode;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -21,8 +24,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @ValidateBy(validatedClass = EndWithValidator.class)
+@ErrorCode
 public @interface EndWith {
 
     String value() default "";
 
+    @AliasFor(annotation = ErrorCode.class)
+    int errorCode() default HttpErrorCode.ACCESS_DENIED;
 }

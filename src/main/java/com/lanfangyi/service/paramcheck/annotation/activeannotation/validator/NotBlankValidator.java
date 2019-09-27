@@ -18,14 +18,14 @@ import java.util.Arrays;
 public class NotBlankValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        NotBlank notBlank = (NotBlank) annotation;
         if (null == param) {
-            return ValidateResult.nullValidateResult(paramName);
+            return ValidateResult.nullValidateResult(notBlank.errorCode(), paramName);
         }
         ValidateResult validateResult;
         if (!(param instanceof CharSequence)) {
             throw new AnnotationNoMatchFieldException("Class of param is not CharSequence");
         }
-        NotBlank notBlank = (NotBlank) annotation;
         if (StringUtils.isEmpty(param)) {
             validateResult = new ValidateResult();
             validateResult.setCode(405);

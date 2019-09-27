@@ -1,5 +1,6 @@
 package com.lanfangyi.service.paramcheck.aop.validate;
 
+import com.lanfangyi.service.paramcheck.constants.HttpErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +21,24 @@ public class ValidateResult implements Serializable {
 
     private String validMsg;
 
-    public static ValidateResult nullValidateResult(String paramName){
+    public static ValidateResult nullValidateResult(int code, String paramName){
         ValidateResult validateResult = new ValidateResult();
-        validateResult.setCode(405);
+        validateResult.setCode(code);
         validateResult.setValidMsg(paramName + "参数为null");
+        return validateResult;
+    }
+
+    public static ValidateResult error(String validMsg) {
+        ValidateResult validateResult = new ValidateResult();
+        validateResult.setCode(HttpErrorCode.ACCESS_DENIED);
+        validateResult.setValidMsg(validMsg);
+        return validateResult;
+    }
+
+    public static ValidateResult error(int code, String validMsg) {
+        ValidateResult validateResult = new ValidateResult();
+        validateResult.setCode(code);
+        validateResult.setValidMsg(validMsg);
         return validateResult;
     }
 

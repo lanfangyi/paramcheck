@@ -1,9 +1,13 @@
 package com.lanfangyi.service.paramcheck.annotation.activeannotation;
 
+import com.lanfangyi.service.paramcheck.annotation.ErrorCode;
 import com.lanfangyi.service.paramcheck.annotation.ValidateBy;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.validator.NotBlankValidator;
+import com.lanfangyi.service.paramcheck.constants.HttpErrorCode;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
+
 
 /**
  * 校验参数类型为CharSequence的参数是否为空的注解
@@ -12,6 +16,7 @@ import java.lang.annotation.*;
  * @version 1.0
  * @since 2019/8/20 10:44 PM
  */
+@ErrorCode
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
@@ -47,4 +52,7 @@ public @interface NotBlank {
      * 字符串的最大长度
      */
     int maxLength() default Integer.MAX_VALUE;
+
+    @AliasFor(annotation = ErrorCode.class)
+    int errorCode() default HttpErrorCode.ACCESS_DENIED;
 }

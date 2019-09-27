@@ -15,11 +15,11 @@ import java.lang.annotation.Annotation;
 public class MinLengthValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        MinLength minLength = (MinLength) annotation;
         if (null == param) {
-            return ValidateResult.nullValidateResult(paramName);
+            return ValidateResult.nullValidateResult(minLength.errorCode(), paramName);
         }
         ValidateResult validateResult = null;
-        MinLength minLength = (MinLength) annotation;
         int min = minLength.value();
         if (!(param instanceof Number || param instanceof CharSequence)) {
             throw new AnnotationNoMatchFieldException("Class of param is not Number and not CharSequence");

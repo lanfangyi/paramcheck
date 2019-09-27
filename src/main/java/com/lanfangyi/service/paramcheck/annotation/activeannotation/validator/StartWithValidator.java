@@ -1,5 +1,6 @@
 package com.lanfangyi.service.paramcheck.annotation.activeannotation.validator;
 
+import com.lanfangyi.service.paramcheck.annotation.ErrorCode;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.StartWith;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
@@ -16,19 +17,18 @@ import java.lang.annotation.Annotation;
 public class StartWithValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        StartWith startWith = (StartWith) annotation;
         if (null == param) {
-            return ValidateResult.nullValidateResult(paramName);
+            return ValidateResult.nullValidateResult(startWith.errorCode(), paramName);
         }
         ValidateResult validateResult = null;
-        StartWith startWith = (StartWith) annotation;
+
         String start = startWith.value();
         if (!(param instanceof Number || param instanceof CharSequence)) {
             throw new AnnotationNoMatchFieldException("Class of param is not Number and not CharSequence");
         }
         if (!StringUtils.isEmpty(start) && !String.valueOf(param).startsWith(start)) {
-            validateResult = new ValidateResult();
-            validateResult.setCode(405);
-            validateResult.setValidMsg(paramName + "参数开头不符合要求");
+            validateResult = ValidateResult.error(startWith.errorCode(), paramName + "参数开头不符合要求");
         }
         return validateResult;
     }

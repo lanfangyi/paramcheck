@@ -16,11 +16,11 @@ public class MaxValidator implements Validateable {
 
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        Max max = (Max) annotation;
         if (null == param) {
-            return ValidateResult.nullValidateResult(paramName);
+            return ValidateResult.nullValidateResult(max.errorCode(), paramName);
         }
         ValidateResult validateResult = null;
-        Max max = (Max) annotation;
         double maxValue = max.value();
         if (!(param instanceof Number)) {
             throw new AnnotationNoMatchFieldException("Class of param is not Number");

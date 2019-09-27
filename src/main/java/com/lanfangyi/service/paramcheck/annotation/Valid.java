@@ -22,7 +22,7 @@ public @interface Valid {
     Class msgClass() default Valid.class;
 
     /**
-     * 当校验不通过的时候，接口的返回值，这个值要定义在某个产量文件中。定义之后，程序会去读取并识别类型是否与接口
+     * 当校验不通过的时候，接口的返回值，这个值要定义在某个常量文件中。定义之后，程序会去读取并识别类型是否与接口的返回值类型想匹配
      */
     String msgClassStaticField() default "";
 
@@ -37,12 +37,12 @@ public @interface Valid {
     ErrorLevelEnum logLevel() default ErrorLevelEnum.INFO;
 
     /**
-     * 日志信息
+     * 日志信息。如果为空，则所记信息为校验不通过的信息。
      */
     String logMsg() default "";
 
     /**
-     * 当没有定义返回值并且方法的返回类型中含有code、msg、message等字段时，会将校验的结果设到这等字段中
+     * 当返回值类型是BaseResponse或其子类使，默认会把错误信息封装到code、message字段中去。
      */
     boolean setCodeAndMsg() default true;
 

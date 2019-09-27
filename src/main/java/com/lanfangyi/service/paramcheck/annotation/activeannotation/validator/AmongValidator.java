@@ -18,14 +18,14 @@ import java.util.List;
 public class AmongValidator implements Validateable {
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
+        Among among = (Among) annotation;
         if (null == param) {
-            return ValidateResult.nullValidateResult(paramName);
+            return ValidateResult.nullValidateResult(among.errorCode(), paramName);
         }
         ValidateResult validateResult = null;
         if (!(param instanceof Number)) {
             throw new AnnotationNoMatchFieldException("Class of param is not Number");
         }
-        Among among = (Among) annotation;
         double[] value = among.value();
         List<Double> list = new ArrayList<>();
         for (double v : value) {
@@ -34,7 +34,7 @@ public class AmongValidator implements Validateable {
 
         if (!CollectionUtils.isEmpty(list) && !list.contains(Double.valueOf(String.valueOf(param)))) {
             validateResult = new ValidateResult();
-            validateResult.setCode(405);
+            validateResult.setCode(among.errorCode());
             validateResult.setValidMsg(paramName + "参数不在给定的数组里！");
         }
         return validateResult;
