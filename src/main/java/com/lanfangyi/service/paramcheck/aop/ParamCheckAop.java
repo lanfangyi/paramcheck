@@ -138,12 +138,16 @@ public class ParamCheckAop {
                     return returnObj;
                 } else {
 
-                    Object returnObj = returnType.newInstance();
+                    if (!"void".equals(returnType.getName())) {
 
-                    //记录方法日志
-                    addMethodLog(args, returnObj, valid.methodLogLevel(), method.getName(), valid.addMethodLog());
+                        Object returnObj = returnType.newInstance();
 
-                    return returnObj;
+                        //记录方法日志
+                        addMethodLog(args, returnObj, valid.methodLogLevel(), method.getName(), valid.addMethodLog());
+
+                        return returnObj;
+                    }
+                    return null;
                 }
             }
         }

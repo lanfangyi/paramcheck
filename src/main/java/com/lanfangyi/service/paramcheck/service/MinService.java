@@ -24,4 +24,11 @@ public class MinService {
         System.out.println(a);
         return BaseResponse.success(a);
     }
+
+    @GetMapping("/test2")
+    @Valid(addErrLog = true, errLogLevel = ErrorLevelEnum.ERROR, addMethodLog = true, methodLogLevel = ErrorLevelEnum.ERROR)
+    public void test2(@Min(10) int a, @Min(5) Long b) {
+        System.out.println(a);
+//        return BaseResponse.success(a);
+    }
 }
