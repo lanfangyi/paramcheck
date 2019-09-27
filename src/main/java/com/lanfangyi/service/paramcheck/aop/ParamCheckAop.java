@@ -267,6 +267,15 @@ public class ParamCheckAop {
         addLog(logLevel, logMsg);
     }
 
+    /**
+     * 方法日志
+     *
+     * @param args         方法的入参
+     * @param returnObj    方法的返回值
+     * @param logLevel     日志级别
+     * @param methodName   方法名
+     * @param addMethodLog 是否添加日志
+     */
     private void addMethodLog(Object[] args, Object returnObj, ErrorLevelEnum logLevel, String methodName, boolean addMethodLog) {
         if (addMethodLog) {
             addLog(logLevel, "method name :" + methodName + ". params:" + JSON.toJSONString(args) + ". method return value :" + JSON.toJSONString(returnObj));
