@@ -20,12 +20,12 @@ public class MaxLengthValidator implements Validateable {
             return ValidateResult.nullValidateResult(maxLength.errorCode(), paramName);
         }
         ValidateResult validateResult = null;
-        int max = maxLength.value();
+        int mLength = maxLength.value();
         if (!(param instanceof Number || param instanceof CharSequence)) {
             throw new AnnotationNoMatchFieldException("Class of param is not Number and not CharSequence");
         }
-        if (max < Double.valueOf(String.valueOf(param))) {
-            validateResult = ValidateResult.error(maxLength.errorCode(), paramName + "参数长度大于规定长度！");
+        if (mLength < String.valueOf(param).length()) {
+            validateResult = ValidateResult.error(maxLength.errorCode(), paramName + "参数长度大于规定最大长度！");
         }
         return validateResult;
     }

@@ -22,7 +22,7 @@ import java.lang.annotation.*;
 @ErrorCode
 public @interface NotEmpty {
 
-    int minSize() default 1;
+    int minSize() default Integer.MIN_VALUE;
 
     int maxSize() default Integer.MAX_VALUE;
 

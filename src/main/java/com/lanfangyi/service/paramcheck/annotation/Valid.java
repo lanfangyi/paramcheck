@@ -34,7 +34,17 @@ public @interface Valid {
     /**
      * 如果addErrLog 为true， 则记日志，此变量是日志的级别
      */
-    ErrorLevelEnum logLevel() default ErrorLevelEnum.INFO;
+    ErrorLevelEnum errLogLevel() default ErrorLevelEnum.INFO;
+
+    /**
+     * 添加方法访问日志，记录方法入参和方法出参
+     */
+    boolean addMethodLog() default false;
+
+    /**
+     * 方法访问日志的级别
+     */
+    ErrorLevelEnum methodLogLevel() default ErrorLevelEnum.INFO;
 
     /**
      * 日志信息。如果为空，则所记信息为校验不通过的信息。

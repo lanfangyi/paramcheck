@@ -21,8 +21,8 @@ public class RegExpValidator implements Validateable {
             return ValidateResult.nullValidateResult(regExp.errorCode(), paramName);
         }
         ValidateResult validateResult = null;
-        String s = String.valueOf(param);
-        if (!StringUtils.isEmpty(regExp.value()) && !Pattern.matches(regExp.value(), s)) {
+        String paramStr = String.valueOf(param);
+        if (!StringUtils.isEmpty(regExp.value()) && !Pattern.matches(regExp.value(), paramStr)) {
             validateResult = ValidateResult.error(regExp.errorCode(), paramName + "参数不符合正则");
         }
         return validateResult;

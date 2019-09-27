@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
 @ErrorCode
 public @interface StartWith {
 
-    String value() default "";
+    String value();
 
     @AliasFor(annotation = ErrorCode.class)
     int errorCode() default HttpErrorCode.ACCESS_DENIED;

@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 @ErrorCode
 public @interface MinLength {
 
-    int value() default Integer.MIN_VALUE;
+    int value();
 
     @AliasFor(annotation = ErrorCode.class)
     int errorCode() default HttpErrorCode.ACCESS_DENIED;

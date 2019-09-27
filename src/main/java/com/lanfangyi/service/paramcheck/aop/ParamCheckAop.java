@@ -1,5 +1,6 @@
 package com.lanfangyi.service.paramcheck.aop;
 
+import com.alibaba.fastjson.JSON;
 import com.lanfangyi.service.paramcheck.annotation.Check;
 import com.lanfangyi.service.paramcheck.annotation.Valid;
 import com.lanfangyi.service.paramcheck.annotation.ValidateBy;
@@ -14,6 +15,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -21,6 +23,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import static com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum.ERROR;
 
@@ -34,6 +37,7 @@ import static com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum.ERROR
 @Aspect
 @Component
 @Slf4j
+@Order(1)
 public class ParamCheckAop {
 
     /**
@@ -67,11 +71,12 @@ public class ParamCheckAop {
                 }
             }
         }
+        Valid valid = AnnotationUtils.findAnnotation(method, Valid.class);
+        assert valid != null;
+
         //参数不符合要求
         if (check != null) {
             //获取方法头上Valid注解的信息
-            Valid valid = AnnotationUtils.findAnnotation(method, Valid.class);
-            assert valid != null;
             boolean addErrLog = valid.addErrLog();
             Class clazz = valid.msgClass();
             if (!Valid.class.equals(clazz) && !StringUtils.isEmpty(valid.msgClassStaticField())) {
@@ -81,13 +86,18 @@ public class ParamCheckAop {
                     //抛出类型不匹配异常
                     throw new TypeMismatchException();
                 }
+                //记录校验错误日志
                 if (addErrLog) {
-                    addErrLog(valid.logMsg(), check.getValidMsg(), valid.logLevel());
+                    addErrLog(valid.logMsg(), check.getValidMsg(), valid.errLogLevel());
                 }
+
+                //记录方法日志
+                addMethodLog(args, declaredField.get(clazz), valid.methodLogLevel(), method.getName(), valid.addMethodLog());
+
                 return declaredField.get(clazz);
             } else {
                 if (addErrLog) {
-                    addErrLog(valid.logMsg(), check.getValidMsg(), valid.logLevel());
+                    addErrLog(valid.logMsg(), check.getValidMsg(), valid.errLogLevel());
                 }
                 //判断返回值类型是否是BaseResponse或其子类
                 Class<?> returnType = method.getReturnType();
@@ -121,14 +131,29 @@ public class ParamCheckAop {
                             log.error(throwable.getMessage());
                         }
                     }
+
+                    //记录方法日志
+                    addMethodLog(args, returnObj, valid.methodLogLevel(), method.getName(), valid.addMethodLog());
+
                     return returnObj;
                 } else {
-                    return returnType.newInstance();
+
+                    Object returnObj = returnType.newInstance();
+
+                    //记录方法日志
+                    addMethodLog(args, returnObj, valid.methodLogLevel(), method.getName(), valid.addMethodLog());
+
+                    return returnObj;
                 }
             }
         }
         //方法放行
-        return joinPoint.proceed();
+        Object proceed = joinPoint.proceed();
+
+        //记录方法日志
+        addMethodLog(args, proceed, valid.methodLogLevel(), method.getName(), valid.addMethodLog());
+
+        return proceed;
     }
 
     /**
@@ -222,7 +247,7 @@ public class ParamCheckAop {
     }
 
     /**
-     * 记日志
+     * 参数校验记日志
      *
      * @param userLogMsg  用户配置的日志信息
      * @param checkLogMsg 系统默认的日志信息
@@ -235,6 +260,16 @@ public class ParamCheckAop {
         } else {
             logMsg = checkLogMsg;
         }
+        addLog(logLevel, logMsg);
+    }
+
+    private void addMethodLog(Object[] args, Object returnObj, ErrorLevelEnum logLevel, String methodName, boolean addMethodLog) {
+        if (addMethodLog) {
+            addLog(logLevel, "method name :" + methodName + ". params:" + JSON.toJSONString(args) + ". method return value :" + JSON.toJSONString(returnObj));
+        }
+    }
+
+    private void addLog(ErrorLevelEnum logLevel, String logMsg) {
         if (!StringUtils.isEmpty(logMsg)) {
             switch (logLevel) {
                 case INFO:

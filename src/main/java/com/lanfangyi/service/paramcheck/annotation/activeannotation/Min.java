@@ -22,7 +22,7 @@ import java.lang.annotation.*;
 @ErrorCode
 public @interface Min {
 
-    double value() default Double.MIN_VALUE;
+    double value();
 
     @AliasFor(annotation = ErrorCode.class)
     int errorCode() default HttpErrorCode.ACCESS_DENIED;

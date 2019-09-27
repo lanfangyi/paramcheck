@@ -22,7 +22,7 @@ import java.lang.annotation.*;
 @ErrorCode
 public @interface Max {
 
-    double value() default Double.MAX_VALUE;
+    double value();
 
     @AliasFor(annotation = ErrorCode.class)
     int errorCode() default HttpErrorCode.ACCESS_DENIED;

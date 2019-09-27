@@ -1,8 +1,8 @@
 package com.lanfangyi.service.paramcheck.service;
 
 import com.lanfangyi.service.paramcheck.annotation.Valid;
-import com.lanfangyi.service.paramcheck.annotation.activeannotation.Among;
-import com.lanfangyi.service.paramcheck.annotation.activeannotation.Max;
+import com.lanfangyi.service.paramcheck.annotation.activeannotation.Min;
+import com.lanfangyi.service.paramcheck.annotation.activeannotation.MinLength;
 import com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum;
 import com.lanfangyi.service.paramcheck.resp.BaseResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,19 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019/9/24 2:11 PM
  */
 @RestController
-@RequestMapping("/among")
-public class AmongService {
+@RequestMapping("/minLength")
+public class MinLengthService {
 
     @GetMapping("/test")
     @Valid(addErrLog = true, errLogLevel = ErrorLevelEnum.ERROR)
-    public BaseResponse<Integer> test(@Among({1, 2}) @Max(3) int a) {
-        System.out.println(a);
-        return BaseResponse.success(a);
-    }
-
-    @GetMapping("/test2")
-    @Valid
-    public BaseResponse<Double> test2(@Among({1}) Double a) {
+    public BaseResponse<Integer> test(@MinLength(2) int a, @MinLength(3) Long b, @MinLength(3) String aa) {
         System.out.println(a);
         return BaseResponse.success(a);
     }

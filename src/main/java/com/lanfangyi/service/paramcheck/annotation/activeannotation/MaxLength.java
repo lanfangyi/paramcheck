@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 @ErrorCode
 public @interface MaxLength {
 
-    int value() default Integer.MAX_VALUE;
+    int value();
 
     @AliasFor(annotation = ErrorCode.class)
     int errorCode() default HttpErrorCode.ACCESS_DENIED;

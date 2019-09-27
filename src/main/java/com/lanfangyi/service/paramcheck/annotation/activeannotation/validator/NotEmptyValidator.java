@@ -28,18 +28,11 @@ public class NotEmptyValidator implements Validateable {
             return ValidateResult.error(notEmpty.errorCode(), paramName + "参数不能为空集合");
         }
 
-        if (notEmpty.maxSize() < 1) {
-            throw new RuntimeException("Collection max size can not small than 1");
-        }
-        if (notEmpty.minSize() < 1) {
-            throw new RuntimeException("Collection min size can not small than 1");
-        }
-
         if (((Collection) param).size() < notEmpty.minSize()) {
-            return ValidateResult.error(notEmpty.errorCode(), paramName + "参数大小不能小于" + notEmpty.minSize());
+            return ValidateResult.error(notEmpty.errorCode(), paramName + "参数size不能小于" + notEmpty.minSize());
         }
         if (((Collection) param).size() > notEmpty.maxSize()) {
-            return ValidateResult.error(notEmpty.errorCode(), paramName + "参数大小不能大于" + notEmpty.maxSize());
+            return ValidateResult.error(notEmpty.errorCode(), paramName + "参数size不能大于" + notEmpty.maxSize());
         }
         return null;
     }
