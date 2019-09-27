@@ -25,9 +25,7 @@ public class MinValidator implements Validateable {
             throw new AnnotationNoMatchFieldException("Class of param is not Number");
         }
         if (minValue > Double.valueOf(String.valueOf(param))) {
-            validateResult = new ValidateResult();
-            validateResult.setCode(405);
-            validateResult.setValidMsg(paramName + "参数小于最小值");
+            validateResult = ValidateResult.error(min.errorCode(), paramName + "参数小于最小值");
         }
         return validateResult;
     }

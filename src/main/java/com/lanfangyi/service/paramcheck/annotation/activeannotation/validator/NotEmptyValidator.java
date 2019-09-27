@@ -21,16 +21,12 @@ public class NotEmptyValidator implements Validateable {
         if (null == param) {
             return ValidateResult.nullValidateResult(notEmpty.errorCode(), paramName);
         }
-        ValidateResult validateResult = null;
         if (!(param instanceof Collection)) {
             throw new AnnotationNoMatchFieldException("Class of param is not Collection");
         }
         if (CollectionUtils.isEmpty((Collection) param)) {
-            validateResult = new ValidateResult();
-            validateResult.setCode(405);
-            validateResult.setValidMsg(paramName + "参数不能为空集合");
+            return ValidateResult.error(notEmpty.errorCode(), paramName + "参数不能为空集合");
         }
-
 
         if (notEmpty.maxSize() < 1) {
             throw new RuntimeException("Collection max size can not small than 1");
@@ -40,15 +36,11 @@ public class NotEmptyValidator implements Validateable {
         }
 
         if (((Collection) param).size() < notEmpty.minSize()) {
-            validateResult = new ValidateResult();
-            validateResult.setCode(405);
-            validateResult.setValidMsg(paramName + "参数大小不能小于" + notEmpty.minSize());
+            return ValidateResult.error(notEmpty.errorCode(), paramName + "参数大小不能小于" + notEmpty.minSize());
         }
         if (((Collection) param).size() > notEmpty.maxSize()) {
-            validateResult = new ValidateResult();
-            validateResult.setCode(405);
-            validateResult.setValidMsg(paramName + "参数大小不能大于" + notEmpty.maxSize());
+            return ValidateResult.error(notEmpty.errorCode(), paramName + "参数大小不能大于" + notEmpty.maxSize());
         }
-        return validateResult;
+        return null;
     }
 }

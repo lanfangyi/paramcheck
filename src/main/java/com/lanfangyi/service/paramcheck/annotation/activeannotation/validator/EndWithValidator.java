@@ -26,9 +26,7 @@ public class EndWithValidator implements Validateable {
             throw new AnnotationNoMatchFieldException("Class of param is not Number and not CharSequence");
         }
         if (!StringUtils.isEmpty(end) && !String.valueOf(param).endsWith(end)) {
-            validateResult = new ValidateResult();
-            validateResult.setCode(405);
-            validateResult.setValidMsg(paramName + "参数开头不符合要求");
+            validateResult = ValidateResult.error(endWith.errorCode(), paramName + "参数开头不符合要求");
         }
         return validateResult;
     }

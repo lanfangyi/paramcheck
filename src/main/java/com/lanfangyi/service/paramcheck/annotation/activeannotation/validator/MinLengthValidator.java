@@ -25,9 +25,7 @@ public class MinLengthValidator implements Validateable {
             throw new AnnotationNoMatchFieldException("Class of param is not Number and not CharSequence");
         }
         if (min > Double.valueOf(String.valueOf(param))) {
-            validateResult = new ValidateResult();
-            validateResult.setCode(405);
-            validateResult.setValidMsg(paramName + "参数长度小于规定长度！");
+            validateResult = ValidateResult.error(minLength.errorCode(), paramName + "参数长度小于规定长度！");
         }
         return validateResult;
     }

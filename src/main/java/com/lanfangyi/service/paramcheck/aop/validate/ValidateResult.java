@@ -24,7 +24,7 @@ public class ValidateResult implements Serializable {
     public static ValidateResult nullValidateResult(int code, String paramName){
         ValidateResult validateResult = new ValidateResult();
         validateResult.setCode(code);
-        validateResult.setValidMsg(paramName + "参数为null");
+        validateResult.setValidMsg(paramName + "参数不能为null");
         return validateResult;
     }
 
