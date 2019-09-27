@@ -67,7 +67,7 @@ public class ParamCheckAop {
                 }
             }
         }
-        //判断是否参数不符合要求
+        //参数不符合要求
         if (check != null) {
             //获取方法头上Valid注解的信息
             Valid valid = AnnotationUtils.findAnnotation(method, Valid.class);
@@ -89,20 +89,22 @@ public class ParamCheckAop {
                 if (addErrLog) {
                     addErrLog(valid.logMsg(), check.getValidMsg(), valid.logLevel());
                 }
-                boolean setCodeAndMsg = valid.setCodeAndMsg();
                 //判断返回值类型是否是BaseResponse或其子类
-                if (setCodeAndMsg && BaseResponse.class.isAssignableFrom(method.getReturnType())) {
-                    Object returnObj = method.getReturnType().newInstance();
+                Class<?> returnType = method.getReturnType();
+                if (valid.setCodeAndMsg() && BaseResponse.class.isAssignableFrom(returnType)) {
+                    Object returnObj = returnType.newInstance();
                     if (null != returnObj) {
                         try {
                             Field message;
                             Field code;
-                            if (method.getReturnType().equals(BaseResponse.class)) {
-                                message = method.getReturnType().getDeclaredField("message");
-                                code = method.getReturnType().getDeclaredField("code");
+                            //returnType是BaseResponse
+                            if (returnType.equals(BaseResponse.class)) {
+                                message = returnType.getDeclaredField("message");
+                                code = returnType.getDeclaredField("code");
                             } else {
-                                message = method.getReturnType().getSuperclass().getDeclaredField("message");
-                                code = method.getReturnType().getSuperclass().getDeclaredField("code");
+                                //returnType是BaseResponse的子类
+                                message = returnType.getSuperclass().getDeclaredField("message");
+                                code = returnType.getSuperclass().getDeclaredField("code");
                             }
                             if (message == null) {
                                 throw new RuntimeException("can not find message field");
@@ -119,10 +121,9 @@ public class ParamCheckAop {
                             log.error(throwable.getMessage());
                         }
                     }
-                    System.out.println(returnObj);
                     return returnObj;
                 } else {
-                    return method.getReturnType().newInstance();
+                    return returnType.newInstance();
                 }
             }
         }
