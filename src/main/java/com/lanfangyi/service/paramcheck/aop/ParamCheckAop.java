@@ -23,7 +23,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 import static com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum.ERROR;
 
@@ -45,7 +44,6 @@ public class ParamCheckAop {
      *
      * @param joinPoint 切点
      * @return Object 接口的返回值
-     * @throws Throwable
      */
     @Around("@annotation(com.lanfangyi.service.paramcheck.annotation.Valid)")
     public Object valid(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -160,6 +158,10 @@ public class ParamCheckAop {
         return proceed;
     }
 
+    public static void main(String[] args) {
+        System.out.println(Void.class.getSimpleName());
+    }
+
     /**
      * 根据注解校验入参
      *
@@ -167,10 +169,6 @@ public class ParamCheckAop {
      * @param param      参数
      * @param paramName  参数名
      * @return ValidateResult
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      */
     private ValidateResult check(Annotation annotation, Object param, String paramName) throws InvocationTargetException,
         NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -211,10 +209,6 @@ public class ParamCheckAop {
      *
      * @param param 实体实例对象
      * @return ValidateResult
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
-     * @throws InstantiationException
-     * @throws InvocationTargetException
      */
     private ValidateResult checkEntity(Object param) throws IllegalAccessException, NoSuchMethodException,
         InstantiationException, InvocationTargetException {
