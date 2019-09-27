@@ -247,6 +247,7 @@ public class ParamCheckAop {
                     log.debug(logMsg);
                     break;
                 case ERROR:
+                case FATAL:
                     log.error(logMsg);
                     break;
                 default:
