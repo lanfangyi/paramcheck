@@ -158,10 +158,6 @@ public class ParamCheckAop {
         return proceed;
     }
 
-    public static void main(String[] args) {
-        System.out.println(Void.class.getSimpleName());
-    }
-
     /**
      * 根据注解校验入参
      *
