@@ -4,9 +4,6 @@ import com.lanfangyi.service.paramcheck.annotation.activeannotation.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.util.ReflectionUtils;
-
-import java.lang.reflect.Field;
 
 /**
  * @author lanfangyi@haodf.com
