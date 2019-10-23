@@ -8,7 +8,6 @@ import com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
 import com.lanfangyi.service.paramcheck.exception.TypeMismatchException;
-import com.lanfangyi.service.paramcheck.resp.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -17,6 +16,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
@@ -39,6 +39,8 @@ import static com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum.ERROR
 @Order(1)
 public class ParamCheckAop {
 
+    private static final String RETURN_TYPE_VOID = "void";
+
     /**
      * 切面函数，只有加了@Valid注解的接口才会开启注解校验
      *
@@ -51,24 +53,9 @@ public class ParamCheckAop {
         Object[] args = joinPoint.getArgs();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-        String[] parameterNames = signature.getParameterNames();
-        //遍历取出方法的注解
-        int index = 0;
-        ValidateResult check = null;
-        checkFor:
-        for (Annotation[] annotations : parameterAnnotations) {
-            index++;
-            if (annotations.length == 0) {
-                continue;
-            }
-            for (Annotation annotation : annotations) {
-                check = check(annotation, args[index - 1], parameterNames[index - 1]);
-                if (check != null) {
-                    break checkFor;
-                }
-            }
-        }
+
+        //校验
+        ValidateResult check = getValidateResult(args, method.getParameterAnnotations(), signature.getParameterNames());
         Valid valid = AnnotationUtils.findAnnotation(method, Valid.class);
         assert valid != null;
 
@@ -76,6 +63,12 @@ public class ParamCheckAop {
         if (check != null) {
             //获取方法头上Valid注解的信息
             boolean addErrLog = valid.addErrLog();
+
+            //记录校验错误日志
+            if (addErrLog) {
+                addErrLog(valid.logMsg(), check.getValidMsg(), valid.errLogLevel());
+            }
+
             Class clazz = valid.msgClass();
             if (!Valid.class.equals(clazz) && !StringUtils.isEmpty(valid.msgClassStaticField())) {
                 Field declaredField = clazz.getDeclaredField(valid.msgClassStaticField().trim());
@@ -84,47 +77,32 @@ public class ParamCheckAop {
                     //抛出类型不匹配异常
                     throw new TypeMismatchException();
                 }
-                //记录校验错误日志
-                if (addErrLog) {
-                    addErrLog(valid.logMsg(), check.getValidMsg(), valid.errLogLevel());
-                }
-
                 //记录方法日志
                 addMethodLog(args, declaredField.get(clazz), valid.methodLogLevel(), method.getName(), valid.addMethodLog());
 
                 return declaredField.get(clazz);
             } else {
-                if (addErrLog) {
-                    addErrLog(valid.logMsg(), check.getValidMsg(), valid.errLogLevel());
-                }
                 //判断返回值类型是否是BaseResponse或其子类
                 Class<?> returnType = method.getReturnType();
-                if (valid.setCodeAndMsg() && BaseResponse.class.isAssignableFrom(returnType)) {
+                if (valid.setCodeAndMsg() && !RETURN_TYPE_VOID.equals(returnType.getName())) {
                     Object returnObj = returnType.newInstance();
                     if (null != returnObj) {
                         try {
-                            Field message;
-                            Field code;
-                            //returnType是BaseResponse
-                            if (returnType.equals(BaseResponse.class)) {
-                                message = returnType.getDeclaredField("message");
-                                code = returnType.getDeclaredField("code");
-                            } else {
-                                //returnType是BaseResponse的子类
-                                message = returnType.getSuperclass().getDeclaredField("message");
-                                code = returnType.getSuperclass().getDeclaredField("code");
-                            }
+                            // TODO: 2019/10/22 字段名做成可配置的，别的公司的框架不一定用msg这个名字
+                            Field message = ReflectionUtils.findField(returnType, "message");
+                            Field code = ReflectionUtils.findField(returnType, "code");
                             if (message == null) {
-                                throw new RuntimeException("can not find message field");
+                                log.error("can not find message field");
+                            }else {
+                                message.setAccessible(true);
+                                message.set(returnObj, check.getValidMsg());
                             }
                             if (code == null) {
-                                throw new RuntimeException("can not find code field");
+                                log.error("can not find code field");
+                            }else {
+                                code.setAccessible(true);
+                                code.set(returnObj, check.getCode());
                             }
-                            message.setAccessible(true);
-                            message.set(returnObj, check.getValidMsg());
-
-                            code.setAccessible(true);
-                            code.set(returnObj, check.getCode());
                         } catch (Throwable throwable) {
                             log.error(throwable.getMessage());
                         }
@@ -135,8 +113,7 @@ public class ParamCheckAop {
 
                     return returnObj;
                 } else {
-
-                    if (!"void".equals(returnType.getName())) {
+                    if (!RETURN_TYPE_VOID.equals(returnType.getName())) {
 
                         Object returnObj = returnType.newInstance();
 
@@ -150,12 +127,45 @@ public class ParamCheckAop {
             }
         }
         //方法放行
-        Object proceed = joinPoint.proceed();
+        Object proceedReturnObj = joinPoint.proceed();
 
         //记录方法日志
-        addMethodLog(args, proceed, valid.methodLogLevel(), method.getName(), valid.addMethodLog());
+        addMethodLog(args, proceedReturnObj, valid.methodLogLevel(), method.getName(), valid.addMethodLog());
 
-        return proceed;
+        return proceedReturnObj;
+    }
+
+    /**
+     * 校验参数
+     *
+     * @param args                 方法的所有入参
+     * @param parameterAnnotations 方法的所有注解
+     * @param parameterNames       方法的所有参数的名字
+     * @return
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    private ValidateResult getValidateResult(Object[] args, Annotation[][] parameterAnnotations, String[] parameterNames)
+        throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        ValidateResult check = null;
+        //遍历取出方法的注解
+        int index = 0;
+        checkFor:
+        for (Annotation[] annotations : parameterAnnotations) {
+            index++;
+            if (annotations.length == 0) {
+                continue;
+            }
+            for (Annotation annotation : annotations) {
+                check = check(annotation, args[index - 1], parameterNames[index - 1]);
+                if (check != null) {
+                    break checkFor;
+                }
+            }
+        }
+        return check;
     }
 
     /**
@@ -185,14 +195,16 @@ public class ParamCheckAop {
         }
         try {
             Class validatedClass = validateBy.validatedClass();
-            Method valid = validatedClass.getDeclaredMethod("valid", Annotation.class, Object.class, String.class);
+//            Method valid = validatedClass.getDeclaredMethod("valid", Annotation.class, Object.class, String.class);
+            Method valid = ReflectionUtils.findMethod(validatedClass, "valid", Annotation.class, Object.class, String.class);
             if (valid == null) {
                 return new ValidateResult();
             }
             //获得校验器的实例子对象
             Validateable validateable = (Validateable) validatedClass.newInstance();
             validateResult = (ValidateResult) valid.invoke(validateable, annotation, param, paramName);
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+
+        } catch (InstantiationException | IllegalAccessException  | InvocationTargetException e) {
             //记一个日志
             addErrLog(null, e.toString(), ERROR);
             throw e;

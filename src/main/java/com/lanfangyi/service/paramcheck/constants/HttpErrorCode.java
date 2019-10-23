@@ -10,5 +10,5 @@ public class HttpErrorCode {
     private HttpErrorCode() {
     }
 
-    public static final int ACCESS_DENIED = 405;
+    public static final int ACCESS_DENIED = 1001;
 }

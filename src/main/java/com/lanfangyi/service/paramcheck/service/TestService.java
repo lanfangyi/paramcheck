@@ -9,6 +9,7 @@ import com.lanfangyi.service.paramcheck.annotation.activeannotation.Range;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.constants.ErrorCode;
 import com.lanfangyi.service.paramcheck.domain.User;
+import com.lanfangyi.service.paramcheck.resp.BaseResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +32,9 @@ public class TestService {
     }
 
     @GetMapping("/test2")
-    @Valid(msgClass = ErrorCode.class, msgClassStaticField = "PARAM_ERROR2")
+//    @Valid(msgClass = ErrorCode.class, msgClassStaticField = "PARAM_ERROR2")
     public ValidateResult test2(@NotBlank(among = {"da", "d"}, minLength = 2) String a) {
+        System.out.println("-----");
         return new ValidateResult();
     }
 
@@ -44,6 +46,12 @@ public class TestService {
         ValidateResult validateResult = this.test2("a");
         System.out.println(validateResult);
         return "aaa";
+    }
+
+    @PostMapping("/test4")
+    @Valid()
+    public BaseResponse<String> test4(@RequestBody @Check User user) {
+        return BaseResponse.success("-----");
     }
 
 }

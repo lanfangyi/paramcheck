@@ -1,5 +1,7 @@
 package com.lanfangyi.service.paramcheck.annotation;
 
+import com.lanfangyi.service.paramcheck.annotation.activeannotation.validator.CheckEntityValidator;
+
 import java.lang.annotation.*;
 
 /**
@@ -12,5 +14,6 @@ import java.lang.annotation.*;
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@ValidateBy(validatedClass = CheckEntityValidator.class)
 public @interface Check {
 }

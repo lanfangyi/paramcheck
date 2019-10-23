@@ -4,6 +4,9 @@ import com.lanfangyi.service.paramcheck.annotation.activeannotation.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.util.ReflectionUtils;
+
+import java.lang.reflect.Field;
 
 /**
  * @author lanfangyi@haodf.com
@@ -13,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User2 {
+public class User2 extends BaseUser2{
 
     @Min(2)
     private long a;

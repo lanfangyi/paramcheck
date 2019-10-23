@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Min(2)
-    private long a;
+    private long id;
 
     @Check
     private User2 user2;

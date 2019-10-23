@@ -24,4 +24,5 @@ public class RangeService {
         System.out.println(a);
         return BaseResponse.success(a);
     }
+
 }
