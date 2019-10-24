@@ -8,6 +8,7 @@ package com.lanfangyi.service.paramcheck.exception;
 public class ClassNoMatchException extends RuntimeException {
 
     public ClassNoMatchException() {
+        super("class 类型不匹配");
     }
 
     public ClassNoMatchException(String message) {

@@ -8,6 +8,7 @@ package com.lanfangyi.service.paramcheck.exception;
 public class TypeMismatchException extends RuntimeException {
 
     public TypeMismatchException() {
+        super("定义的返回值类型与方法签名的返回值类型不同");
     }
 
     public TypeMismatchException(String message) {

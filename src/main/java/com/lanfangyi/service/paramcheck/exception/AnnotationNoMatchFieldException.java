@@ -9,6 +9,7 @@ package com.lanfangyi.service.paramcheck.exception;
 public class AnnotationNoMatchFieldException extends RuntimeException {
 
     public AnnotationNoMatchFieldException() {
+        super("注解不适用于此字段类型");
     }
 
     public AnnotationNoMatchFieldException(String message) {

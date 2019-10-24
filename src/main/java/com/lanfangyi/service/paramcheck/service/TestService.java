@@ -4,7 +4,6 @@ import com.lanfangyi.service.paramcheck.annotation.Check;
 import com.lanfangyi.service.paramcheck.annotation.Valid;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.Among;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotBlank;
-import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotNull;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.Range;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.constants.ErrorCode;

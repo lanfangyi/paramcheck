@@ -8,6 +8,7 @@ package com.lanfangyi.service.paramcheck.exception;
 public class NoRationalNumberException extends RuntimeException {
 
     public NoRationalNumberException() {
+        super("参数不是整数，校验不通过");
     }
 
     public NoRationalNumberException(String message) {
@@ -21,4 +22,5 @@ public class NoRationalNumberException extends RuntimeException {
     public NoRationalNumberException(String message, Throwable cause) {
         super(message, cause);
     }
+
 }

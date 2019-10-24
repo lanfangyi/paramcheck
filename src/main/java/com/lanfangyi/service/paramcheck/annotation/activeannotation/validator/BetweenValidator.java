@@ -5,6 +5,7 @@ import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
 import com.lanfangyi.service.paramcheck.exception.AnnotationNoMatchFieldException;
 import com.lanfangyi.service.paramcheck.exception.NoRationalNumberException;
+import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.regex.Matcher;
@@ -16,6 +17,7 @@ import java.util.regex.Pattern;
  * @since 2019/8/20 10:44 PM
  */
 public class BetweenValidator implements Validateable {
+
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         Between between = (Between) annotation;
@@ -38,7 +40,7 @@ public class BetweenValidator implements Validateable {
     }
 
     private static boolean isMatch(String regex, String orginal) {
-        if (orginal == null || orginal.trim().equals("")) {
+        if (StringUtils.isEmpty(orginal) || StringUtils.isEmpty(orginal.trim())) {
             return false;
         }
         Pattern pattern = Pattern.compile(regex);
@@ -51,10 +53,22 @@ public class BetweenValidator implements Validateable {
         return isPositiveInteger(orginal) || isNegativeInteger(orginal);
     }
 
+    /**
+     * 校验正整数
+     *
+     * @param orginal 数字字符串
+     * @return boolean
+     */
     private static boolean isPositiveInteger(String orginal) {
         return isMatch("^\\+{0,1}[1-9]\\d*", orginal);
     }
 
+    /**
+     * 校验负整数
+     *
+     * @param orginal 数字字符串
+     * @return boolean
+     */
     private static boolean isNegativeInteger(String orginal) {
         return isMatch("^-[1-9]\\d*", orginal);
     }

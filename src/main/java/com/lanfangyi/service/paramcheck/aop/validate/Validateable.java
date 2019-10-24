@@ -9,6 +9,14 @@ import java.lang.annotation.Annotation;
  */
 public interface Validateable {
 
+    /**
+     * 校验参数
+     *
+     * @param annotation 注解类型
+     * @param param      要检验的参数
+     * @param paramName  参数的名字
+     * @return 校验结果
+     */
     ValidateResult valid(Annotation annotation, Object param, String paramName);
 
 }

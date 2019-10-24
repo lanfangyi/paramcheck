@@ -15,6 +15,7 @@ import java.lang.annotation.Annotation;
  */
 @Slf4j
 public class CheckEntityValidator implements Validateable {
+
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         log.info("CheckEntityValidator valid.");
