@@ -1,6 +1,5 @@
 package com.lanfangyi.service.paramcheck.annotation.activeannotation.validator;
 
-import com.lanfangyi.service.paramcheck.annotation.ErrorCode;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.StartWith;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
 import com.lanfangyi.service.paramcheck.aop.validate.Validateable;
@@ -15,6 +14,7 @@ import java.lang.annotation.Annotation;
  * @since 2019/8/20 10:44 PM
  */
 public class StartWithValidator implements Validateable {
+
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         StartWith startWith = (StartWith) annotation;

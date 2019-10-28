@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  * @since 2019/8/20 10:44 PM
  */
 public class RegExpValidator implements Validateable {
+
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         RegExp regExp = (RegExp) annotation;

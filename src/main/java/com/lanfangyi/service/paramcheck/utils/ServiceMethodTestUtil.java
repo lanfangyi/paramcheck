@@ -20,6 +20,7 @@ public class ServiceMethodTestUtil {
         System.out.println("----00q3w234");
 
         System.out.println(Integer.class.isAssignableFrom(clazz));
+
         return null;
     }
 }

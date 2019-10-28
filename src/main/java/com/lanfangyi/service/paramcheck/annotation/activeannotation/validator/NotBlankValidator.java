@@ -16,6 +16,7 @@ import java.util.Arrays;
  * @since 2019/8/20 10:44 PM
  */
 public class NotBlankValidator implements Validateable {
+
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         NotBlank notBlank = (NotBlank) annotation;

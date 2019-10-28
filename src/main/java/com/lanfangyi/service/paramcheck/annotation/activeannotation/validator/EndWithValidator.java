@@ -14,6 +14,7 @@ import java.lang.annotation.Annotation;
  * @since 2019/8/20 10:44 PM
  */
 public class EndWithValidator implements Validateable {
+
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         EndWith endWith = (EndWith) annotation;

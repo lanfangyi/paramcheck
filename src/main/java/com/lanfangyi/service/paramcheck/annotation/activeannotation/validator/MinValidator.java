@@ -13,6 +13,7 @@ import java.lang.annotation.Annotation;
  * @since 2019/8/20 10:44 PM
  */
 public class MinValidator implements Validateable {
+
     @Override
     public ValidateResult valid(Annotation annotation, Object param, String paramName) {
         Min min = (Min) annotation;
