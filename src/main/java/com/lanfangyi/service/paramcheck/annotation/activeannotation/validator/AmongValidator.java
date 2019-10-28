@@ -34,7 +34,7 @@ public class AmongValidator implements Validateable {
         }
 
         if (!CollectionUtils.isEmpty(list) && !list.contains(Double.valueOf(String.valueOf(param)))) {
-            validateResult = ValidateResult.error(among.errorCode(),paramName + "参数不在给定的数组里！");
+            validateResult = ValidateResult.error(among.errorCode(), paramName + "参数不在给定的数组里！");
         }
         return validateResult;
     }

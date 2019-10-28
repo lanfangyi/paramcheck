@@ -31,8 +31,8 @@ public class TestService {
     }
 
     @GetMapping("/test2")
-//    @Valid(msgClass = ErrorCode.class, msgClassStaticField = "PARAM_ERROR2")
-    public ValidateResult test2(@NotBlank(among = {"da", "d"}, minLength = 2) String a) {
+    @Valid(msgClass = ErrorCode.class, msgClassStaticField = "PARAM_ERROR2")
+    public ValidateResult test2(/*@NotBlank(among = {"da", "d"}, minLength = 2)*/ @Check String a) {
         System.out.println("-----");
         return new ValidateResult();
     }

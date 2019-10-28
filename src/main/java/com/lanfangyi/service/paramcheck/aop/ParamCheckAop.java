@@ -93,13 +93,13 @@ public class ParamCheckAop {
                             Field code = ReflectionUtils.findField(returnType, "code");
                             if (message == null) {
                                 log.error("can not find message field");
-                            }else {
+                            } else {
                                 message.setAccessible(true);
                                 message.set(returnObj, check.getValidMsg());
                             }
                             if (code == null) {
                                 log.error("can not find code field");
-                            }else {
+                            } else {
                                 code.setAccessible(true);
                                 code.set(returnObj, check.getCode());
                             }
@@ -195,16 +195,14 @@ public class ParamCheckAop {
         }
         try {
             Class validatedClass = validateBy.validatedClass();
-//            Method valid = validatedClass.getDeclaredMethod("valid", Annotation.class, Object.class, String.class);
             Method valid = ReflectionUtils.findMethod(validatedClass, "valid", Annotation.class, Object.class, String.class);
             if (valid == null) {
                 return new ValidateResult();
             }
             //获得校验器的实例子对象
             Validateable validateable = (Validateable) validatedClass.newInstance();
-            validateResult = (ValidateResult) valid.invoke(validateable, annotation, param, paramName);
-
-        } catch (InstantiationException | IllegalAccessException  | InvocationTargetException e) {
+            validateResult = (ValidateResult) ReflectionUtils.invokeMethod(valid, validateable, annotation, param, paramName);
+        } catch (Exception e) {
             //记一个日志
             addErrLog(null, e.toString(), ERROR);
             throw e;
