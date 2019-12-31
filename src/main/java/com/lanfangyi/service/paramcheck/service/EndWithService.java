@@ -32,6 +32,4 @@ public class EndWithService {
         System.out.println(a);
         return BaseResponse.success(a);
     }
-
-
 }

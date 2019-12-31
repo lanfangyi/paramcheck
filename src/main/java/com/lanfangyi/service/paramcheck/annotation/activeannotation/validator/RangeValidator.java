@@ -27,7 +27,7 @@ public class RangeValidator implements Validateable {
             throw new AnnotationNoMatchFieldException("Class of param is not Number");
         }
         if (!(min <= Double.valueOf(String.valueOf(param)) && max >= Double.valueOf(String.valueOf(param)))) {
-            validateResult = ValidateResult.error(range.errorCode(), paramName + "参数超出数值范围");
+            validateResult = ValidateResult.error(range.errorCode(), paramName + "参数超出数值范围。范围：" + min + "~" + max);
         }
         return validateResult;
     }

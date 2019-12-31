@@ -65,9 +65,15 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.61</version>
+            <version>1.2.62</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.3.1.Final</version>
+        </dependency>
 
 
     </dependencies>

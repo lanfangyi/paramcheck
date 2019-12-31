@@ -26,8 +26,13 @@ public class NotBlankValidator implements Validateable {
         if (!(param instanceof CharSequence)) {
             throw new AnnotationNoMatchFieldException("Class of param is not CharSequence");
         }
+
+        return check(notBlank, param, paramName);
+    }
+
+    private ValidateResult check(NotBlank notBlank, Object param, String paramName) {
         if (StringUtils.isEmpty(param)) {
-            return ValidateResult.error(notBlank.errorCode(), paramName + "参数为空字符串");
+            return ValidateResult.error(notBlank.errorCode(), paramName + "参数不能为空字符串");
         }
         //判断开头
         if (!StringUtils.isEmpty(notBlank.startWith()) && !param.toString().startsWith(notBlank.startWith())) {

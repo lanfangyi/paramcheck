@@ -34,7 +34,7 @@ public class BetweenValidator implements Validateable {
             throw new NoRationalNumberException();
         }
         if (!(min <= Long.valueOf(String.valueOf(param)) && max >= Long.valueOf(String.valueOf(param)))) {
-            validateResult = ValidateResult.error(between.errorCode(), paramName + "参数超出数值范围");
+            validateResult = ValidateResult.error(between.errorCode(), paramName + "参数超出数值范围。范围：" + min + "~" + max);
         }
         return validateResult;
     }

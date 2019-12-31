@@ -26,7 +26,7 @@ public class MaxValidator implements Validateable {
             throw new AnnotationNoMatchFieldException("Class of param is not Number");
         }
         if (maxValue < Double.valueOf(String.valueOf(param))) {
-            validateResult = ValidateResult.error(max.errorCode(), paramName + "参数大于最大值");
+            validateResult = ValidateResult.error(max.errorCode(), paramName + "参数不能大于" + maxValue);
         }
         return validateResult;
     }

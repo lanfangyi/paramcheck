@@ -25,5 +25,4 @@ public class MaxLengthService {
         return BaseResponse.success(a);
     }
 
-
 }

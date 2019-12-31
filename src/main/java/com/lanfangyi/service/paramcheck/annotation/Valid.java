@@ -17,16 +17,6 @@ import java.lang.annotation.*;
 public @interface Valid {
 
     /**
-     * 当出错的时候，返回值所在类
-     */
-    Class msgClass() default Valid.class;
-
-    /**
-     * 当校验不通过的时候，接口的返回值，这个值要定义在某个常量文件中。定义之后，程序会去读取并识别类型是否与接口的返回值类型想匹配
-     */
-    String msgClassStaticField() default "";
-
-    /**
      * 当校验出现错误的时候，是否记日志。
      */
     boolean addErrLog() default false;
@@ -52,7 +42,7 @@ public @interface Valid {
     String logMsg() default "";
 
     /**
-     * 当返回值类型是BaseResponse或其子类使，默认会把错误信息封装到code、message字段中去。
+     * 是否将错误信息封装到RpcResponse的code、msg字段中去
      */
     boolean setCodeAndMsg() default true;
 

@@ -3,10 +3,8 @@ package com.lanfangyi.service.paramcheck.service;
 import com.lanfangyi.service.paramcheck.annotation.Check;
 import com.lanfangyi.service.paramcheck.annotation.Valid;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.Among;
-import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotBlank;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.Range;
 import com.lanfangyi.service.paramcheck.aop.validate.ValidateResult;
-import com.lanfangyi.service.paramcheck.constants.ErrorCode;
 import com.lanfangyi.service.paramcheck.domain.User;
 import com.lanfangyi.service.paramcheck.resp.BaseResponse;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,13 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestService {
 
     @PostMapping("/test")
-    @Valid(msgClass = ErrorCode.class, msgClassStaticField = "PARAM_ERROR")
+    @Valid()
     public String test(@RequestBody @Check User user) {
         return "sss";
     }
 
     @GetMapping("/test2")
-    @Valid(msgClass = ErrorCode.class, msgClassStaticField = "PARAM_ERROR2")
+    @Valid()
     public ValidateResult test2(/*@NotBlank(among = {"da", "d"}, minLength = 2)*/ @Check String a) {
         System.out.println("-----");
         return new ValidateResult();

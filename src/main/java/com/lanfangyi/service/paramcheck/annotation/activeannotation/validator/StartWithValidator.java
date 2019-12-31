@@ -28,7 +28,7 @@ public class StartWithValidator implements Validateable {
             throw new AnnotationNoMatchFieldException("Class of param is not Number and not CharSequence");
         }
         if (!StringUtils.isEmpty(start) && !String.valueOf(param).startsWith(start)) {
-            validateResult = ValidateResult.error(startWith.errorCode(), paramName + "参数开头不符合要求");
+            validateResult = ValidateResult.error(startWith.errorCode(), paramName + "参数必须以" + start + "开头");
         }
         return validateResult;
     }

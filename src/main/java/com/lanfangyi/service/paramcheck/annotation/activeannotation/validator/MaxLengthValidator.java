@@ -26,7 +26,7 @@ public class MaxLengthValidator implements Validateable {
             throw new AnnotationNoMatchFieldException("Class of param is not Number and not CharSequence");
         }
         if (mLength < String.valueOf(param).length()) {
-            validateResult = ValidateResult.error(maxLength.errorCode(), paramName + "参数长度大于规定最大长度！");
+            validateResult = ValidateResult.error(maxLength.errorCode(), paramName + "参数长度不能大于" + mLength);
         }
         return validateResult;
     }
